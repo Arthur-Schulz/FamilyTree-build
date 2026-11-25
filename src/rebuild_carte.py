@@ -50,6 +50,9 @@ NEWP={
  'Corsagna':(43.9775,10.5639,'Corsagna (GeoNames)','Italie'),
  'Mersuay':(47.782,6.139,'Mersuay (cartesfrance.fr ; Wikipédia 47°47′N 6°08′E)','70'),
  'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
+ # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
+ 'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
+ 'Picardie':(49.65,2.9,'Picardie : centre approximatif de la région (pas un lieu précis)','Picardie'),
 }
 # libellé brut -> (nom du lieu, note ou None)
 NEWM={
@@ -71,6 +74,10 @@ NEWM={
  'Voujeaucourt (Doubs)':('Voujeaucourt',None),
  'Corsagna (Italie)':('Corsagna',None),
  'Mersuay':('Mersuay',None),
+ 'Le Crozet (Loire)':('Le Crozet',None),
+ 'Mersuay (70)':('Mersuay',None),
+ 'Auxon (70)':('Auxon',None),
+ 'Picardie':('Picardie','région : placé au centre approximatif de la Picardie'),
  'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
  'La Villette':('Paris','« La Villette » (ancienne commune de la Seine, rattachée à Paris en 1860) : identification non confirmée ; placé sur Paris'),
  'Paris 5e':('Paris','arrondissement non distingué : placé sur Paris'),
@@ -82,9 +89,7 @@ NEWM={
  'St-Sulpice (Neuchâtel, Suisse)':('Saint-Sulpice (Neuchâtel)',None),
 }
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
- 'Le Crozet (Loire)':('Le Crozet (Loire)','localité absente de la base de coordonnées utilisée',True),
- 'Vanel':('Vanel','lieu non identifié (sans département)',True),
- 'Picardie':('Picardie','région, pas un lieu précis',True)}
+ 'Vanel':('Vanel','lieu non identifié (sans département)',True),}
 oldun={u['label']:u for u in D['unplaced']}
 for lab,(l,why,eu) in UNP.items():
     if lab in oldun: assert oldun[lab]['reason']==why,(lab,oldun[lab]['reason'])
@@ -141,5 +146,5 @@ N['persons']=len(WA[0])-1; N['nC']=len(WC[0])-1; N['gen']={'a':TODAY,'c':TODAY}
 out=s[:i0]+json.dumps(N,ensure_ascii=False,separators=(',',':'))+s[i0+e:]
 os.makedirs(os.path.dirname(dst) or '.',exist_ok=True); open(dst,'w',encoding='utf-8').write(out)
 print('events',len(D['events']),'->',len(events),'| lieux',len(D['places']),'->',len(places),'| non localisés',[ (u['label'],len(u['n'])) for u in N['unplaced']])
-print({k:len(v) for k,v in rep.items()})
+print({k:len(v) for k,v in rep.items()}); print('NR',rep.get('NON_RESOLU'))
 json.dump(dict(rep),open(dst+'.rapport.json','w'),ensure_ascii=False,indent=1)
