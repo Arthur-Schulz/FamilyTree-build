@@ -1,0 +1,8 @@
+work/
+out/
+pages/
+*.zip
+*.enc.js
+bundle*.json
+export/
+*.html
