@@ -52,7 +52,6 @@ NEWP={
  'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
  # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
  'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
- 'Picardie':(49.65,2.9,'Picardie : centre approximatif de la région (pas un lieu précis)','Picardie'),
 }
 # libellé brut -> (nom du lieu, note ou None)
 NEWM={
@@ -77,7 +76,6 @@ NEWM={
  'Le Crozet (Loire)':('Le Crozet',None),
  'Mersuay (70)':('Mersuay',None),
  'Auxon (70)':('Auxon',None),
- 'Picardie':('Picardie','région : placé au centre approximatif de la Picardie'),
  'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
  'La Villette':('Paris','« La Villette » (ancienne commune de la Seine, rattachée à Paris en 1860) : identification non confirmée ; placé sur Paris'),
  'Paris 5e':('Paris','arrondissement non distingué : placé sur Paris'),
@@ -89,7 +87,8 @@ NEWM={
  'St-Sulpice (Neuchâtel, Suisse)':('Saint-Sulpice (Neuchâtel)',None),
 }
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
- 'Vanel':('Vanel','lieu non identifié (sans département)',True),}
+ 'Vanel':('Vanel','lieu non identifié (sans département)',True),
+ 'Picardie':('Picardie','région, pas un lieu précis (seuls les communes et lieux-dits sont placés)',True)}
 oldun={u['label']:u for u in D['unplaced']}
 for lab,(l,why,eu) in UNP.items():
     if lab in oldun: assert oldun[lab]['reason']==why,(lab,oldun[lab]['reason'])
