@@ -1,4 +1,4 @@
-"""Contrôle des relocalisations (règle de claude/generateur-relocalisations.md, stats2.py) sur la page Carte régénérée.
+"""Contrôle des relocalisations (règle de claude/generateur-relocalisations.md, rayon MOVES_RADIUS = 10 km par défaut ; liste produite par rebuild_moves.py) sur la page Carte régénérée.
 usage : BUNDLE=work/bundle1.json python3 -I src/check_moves.py out/carte.html"""
 import sys,os,json,math,collections,re
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
@@ -22,6 +22,7 @@ def closure(i,f):
     return seen
 up=lambda x:[q for q in P[x].get('parents',[]) if q in P]
 pls=lambda x:[ev[x].get('b'),ev[x].get('d')]
+RAD=float(os.environ.get("MOVES_RADIUS","10"))
 EXC={'jenny-therese-von-rosenbach':50}
 rows=[]
 for i,p in P.items():
@@ -30,11 +31,11 @@ for i,p in P.items():
     pb,pd=ev[i]['b'],ev[i]['d']; km=hv(pl[pb],pl[pd])
     if km<=100: continue
     asc=closure(i,up); desc=closure(i,lambda x:kids[x])
-    if not any(pb in pls(x) for x in asc): continue
+    if not any(r is not None and hv(pl[r],pl[pb])<RAD for x in asc for r in pls(x)): continue
     rad=EXC.get(i,0)
     if rad:
         if not any(r is not None and hv(pl[r],pl[pd])<rad for x in desc for r in pls(x)): continue
-    elif not any(pd in pls(x) for x in desc): continue
+    elif not any(r is not None and hv(pl[r],pl[pd])<RAD for x in desc for r in pls(x)): continue
     rows.append((i,pl[pb]['name'],pl[pd]['name'],round(km)))
 cur={p['id'] for m in D['moves'] for p in m['p']}
 new={r[0] for r in rows}

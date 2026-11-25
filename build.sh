@@ -13,6 +13,7 @@ if [ -n "$EXPORT" ]; then python3 -I tools/merge_export.py "$EXPORT" "$W/bundle.
 export BUNDLE="$W/bundle.json" BUNDLE_REF="$W/bundle_ref.json"
 python3 -I src/rebuild_ages.py  "$W/pages/ages.html"  "$W/out/ages.html"
 python3 -I src/rebuild_carte.py "$W/pages/carte.html" "$W/out/carte.html"
+python3 -I src/rebuild_moves.py "$W/out/carte.html"   # liste des relocalisations (rayon 10 km, variable MOVES_RADIUS)
 python3 -I src/rebuild_metiers.py "$W/bundle.json" "$W/pages/metiers.html" "$W/out/metiers.html"
 [ -n "$ARBRE" ] && python3 -I src/rebuild_arbre.py "$ARBRE" "$W/pages/arbre.html" "$W/out/arbre.html"   # page Arbre = artifact (version courante) + adaptations zip
 python3 -I src/check_moves.py   "$W/out/carte.html"
