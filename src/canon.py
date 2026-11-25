@@ -1,5 +1,5 @@
 """Intitulé brut -> métiers par famille (fenêtres (i) de la page Métiers).
-Table apprise sur la page du 23/11/2026 (canon_learned.json : 241 intitulés, décisions d'Arthur incluses) ;
+Table apprise sur la page du 23/11/2026 (LEARNED : 241 intitulés, décisions d'Arthur incluses) ;
 NEW = intitulés ajoutés depuis, à faire valider. Un intitulé absent des deux fait échouer la construction.
 Forme : {intitulé: {famille: [métiers]}} ; famille -1 = métier sans famille (« Non classés »)."""
 # Table apprise sur la page Métiers du 23/11/2026 (241 intitulés, décisions d'Arthur incluses).
