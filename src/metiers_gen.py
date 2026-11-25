@@ -12,7 +12,7 @@ R = [
  # 0 Négoce et commerce
  r"marchand(?!s\b)|négociant|commerçant|commerce de|libraire|colporteur|voiturier|armateur|maison de commissions|commissions et de poste|publicitaire|directeur commercial|épicier|mercier|charretier",
  # 1 Offices et fonctions publiques
- r"maire|consul|bailli(?!age)|banneret|bourgmestre|percepteur|prévôté|secrétaire du roi|auditeur au conseil|maître d(es|e la) postes?|inspecteur général des ponts|documentaliste|sénateur|intendant|fonction publique|patriote|diplomate|juge consulaire|prévôt des marchands|co-seigneur",
+ r"maire|consul|bailli(?!age)|banneret|bourgmestre|percepteur|prévôté|secrétaire du roi|auditeur au conseil|maître d(es|e la) postes?|inspecteur général des ponts|documentaliste|sénateur|intendant|fonction publique|patriote|diplomate|juge consulaire|prévôt des marchands|co-seigneur|directeur de la poste",
  # 2 Sciences et industrie
  r"ingénieur|chimiste|industriel|mathématicien|mécanicien|manufacturier|fabricant d.amidon|directeur des (chantiers|salins)|forges|fondé de pouvoir|chef de traction|géomètre|amidonnier|papetier|usine",
  # 3 Droit et justice
@@ -22,11 +22,11 @@ R = [
  # 5 Banque et finance
  r"banquier|agent de change|fondé de pouvoir",
  # 6 Lettres, arts, enseignement
- r"[eé]diteur|libraire|relieur|graveur|professeur|écrivain|poète|historien|sculpt|figuriste|dessinat|artiste|graphiste|violoncelliste|pasteur, professeur|ingénieur des arts et manufactures, éditeur",
+ r"[eé]diteur|libraire|relieur|graveur|professeur|écrivain|poète|historien|sculpt|figuriste|dessinat|artiste|graphiste|violoncelliste|instituteur|pasteur, professeur|ingénieur des arts et manufactures, éditeur",
  # 7 Terre et agriculture
  r"laboureu|cultivat|fermier|planteur|bouilleur|meunier|jardinier|légumi|granger",
  # 8 Textile, cuir et habillement
- r"tisseu|tisser|tisserand|fileu|dévideu|couturi|cordonnier|bonnetier|bas au métier|draps|soie|lacets|dentelles|étoffes|sellier|blanchisseu|ouvrière aux cotons|fabricant de soieries|vêtement",
+ r"tisseu|tisser|tisserand|fileu|dévideu|couturi|cordonnier|bonnetier|bas au métier|draps|soie|lacets|dentelles|étoffes|sellier|blanchisseu|ouvrière aux cotons|fabricant de soieries|teinturier|vêtement",
  # 9 Métaux et bâtiment
  r"forgeron|menuisier|cloutier|coutelier|serrurier|serrurière|maçon|charpentier|architecte|maréchal(?! de camp)|potier d.étain|armurier|arquebusier|charron|vrilles|alaines|quincaill|entrepreneur en bâtiment|clous|ouvrier de boutons",
  # 10 Alimentation et hôtellerie
@@ -36,7 +36,7 @@ R = [
  # 12 Santé
  r"médecin|chirurgien|officier de santé|pharmacien",
  # 13 Autres
- r"pasteur|prêtre|\bcuré\b|\babbé\b|abbesse|vicaire|chanoine|évêque|archevêque|\bpape\b|moine|moniale|religieu(x|se)|aumônier|diacre|chapelain|prieur|clergé|domestique|servante|ménagère|employé|\bsieur\b|écuyer(?!, seigneur)|banneret|noble|baronne",
+ r"pasteur|prêtre|\bcuré\b|\babbé\b|abbesse|vicaire|chanoine|évêque|archevêque|\bpape\b|moine|moniale|religieu(x|se)|aumônier|diacre|chapelain|prieur|clergé|domestique|servante|ménagère|employé|\bsieur\b|écuyer(?!, seigneur)|banneret|noble|baronne|(?<!co-)\bseigneur\b",
 ]
 import unicodedata
 def unacc(t): return ''.join(c for c in unicodedata.normalize('NFD', t) if not unicodedata.combining(c))

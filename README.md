@@ -4,7 +4,7 @@ Dépôt privé, **séparé du dépôt publié sur Netlify** (`FamilyTree`). Il n
 
 ## Usage
 ```
-./build.sh <arbre_local.zip> <sortie.zip> [dossier de travail] [export.json]
+./build.sh <arbre_local.zip> <sortie.zip> [dossier de travail] [export.json] [artifact_index.html]
 ```
 Le zip d'entrée sert de gabarit pour les pages (et de source de données sans export). Avec `export.json` (bouton « Sauvegarde » de l'artifact), `people` et `unions` du zip sont remplacés par l'export (`tools/merge_export.py`) et écrits dans le zip ; photos, wiki et le reste sont conservés. Âges, Carte et Métiers sont recalculés ; les autres fichiers sont repris tels quels (la page Arbre du zip n'est pas régénérée : elle lit ses données dans `data.enc.js`). Le dossier de travail (`/tmp/ft-build` par défaut) contient des données en clair : ne pas le placer dans le dépôt.
 
@@ -12,6 +12,7 @@ Le zip d'entrée sert de gabarit pour les pages (et de source de données sans e
 - `src/model.py` : chargement des données (`BUNDLE=...json`).
 - `src/ages_gen.py`, `src/rebuild_ages.py` : page Âges.
 - `src/rebuild_carte.py` : page Carte (nouveaux lieux avec coordonnées sourcées, rattachements de libellés, événements, branches, poids).
+- `src/rebuild_arbre.py` : page Arbre du zip = HTML de l'artifact (copie courante, 5e argument de `build.sh`) + adaptations « zip » (lecture seule, données de `data.enc.js`, coque) ; échoue si une ancre n'est plus unique.
 - `src/rebuild_metiers.py`, `src/metiers_gen.py`, `src/canon.py` : page Métiers (reconstruits le 25/11/2026, voir ci-dessous).
 - `src/check_moves.py` : contrôle des relocalisations (règle de stats2).
 - `tools/unpack.py`, `tools/pack.py` : décodage et reconstitution du zip ; `tools/merge_export.py` : fusion d'un export dans le jeu de données.

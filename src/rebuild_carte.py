@@ -43,6 +43,13 @@ NEWP={
  'Renan':(47.133,6.933,'Renan (Wikipédia)','Suisse'),
  'Le Pont-de-Montvert':(44.3642,3.7444,'Le Pont-de-Montvert (Wikipédia)','48'),
  'Nancray-sur-Rimarde':(48.069,2.334,'Nancray-sur-Rimarde (Wikipédia)','45'),
+ # ajoutés le 25/11/2026 (planches Cranney / Franceschi-Fleury)
+ 'Besançon':(47.2488,6.0182,'Besançon (GeoNames)','25'),
+ 'Bourbonne-les-Bains':(47.953,5.748,'Bourbonne-les-Bains (GeoNames)','52'),
+ 'Voujeaucourt':(47.4751,6.7743,'Voujeaucourt (GeoNames)','25'),
+ 'Corsagna':(43.9775,10.5639,'Corsagna (GeoNames)','Italie'),
+ 'Mersuay':(47.782,6.139,'Mersuay (cartesfrance.fr ; Wikipédia 47°47′N 6°08′E)','70'),
+ 'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
 }
 # libellé brut -> (nom du lieu, note ou None)
 NEWM={
@@ -59,6 +66,18 @@ NEWM={
  'Paris (17e), 5 rue Viète':('Paris','arrondissement non distingué : placé sur Paris'),
  'Pont-de-Montvert':('Le Pont-de-Montvert',None),
  'Renan':('Renan',None),
+ 'Besançon':('Besançon',None),
+ 'Bourbonne-les-Bains':('Bourbonne-les-Bains',None),
+ 'Voujeaucourt (Doubs)':('Voujeaucourt',None),
+ 'Corsagna (Italie)':('Corsagna',None),
+ 'Mersuay':('Mersuay',None),
+ 'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
+ 'La Villette':('Paris','« La Villette » (ancienne commune de la Seine, rattachée à Paris en 1860) : identification non confirmée ; placé sur Paris'),
+ 'Paris 5e':('Paris','arrondissement non distingué : placé sur Paris'),
+ 'Paris 7e':('Paris','arrondissement non distingué : placé sur Paris'),
+ 'Paris 9e':('Paris','arrondissement non distingué : placé sur Paris'),
+ 'Paris 10e':('Paris','arrondissement non distingué : placé sur Paris'),
+ 'Paris 17e':('Paris','arrondissement non distingué : placé sur Paris'),
  "St-Jean-du-Bruel (Rouergue, aujourd'hui Aveyron)":('Saint-Jean-du-Bruel',None),
  'St-Sulpice (Neuchâtel, Suisse)':('Saint-Sulpice (Neuchâtel)',None),
 }
