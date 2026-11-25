@@ -7,3 +7,4 @@ bundle*.json
 export/
 *.html
 __pycache__/
+*.json
