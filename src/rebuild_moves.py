@@ -7,6 +7,8 @@ usage : BUNDLE=… python3 -I src/rebuild_moves.py out/carte.html"""
 import sys,os,json,math,collections,re
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from model import P,U
+# dates de relocalisation (frise), données par Arthur pour les entrées nouvelles : id -> (année début, année fin)
+MOVE_DATES={'jean-francois-cranney-1708':(1725,1730)}   # monté à Paris peu avant son mariage du 20/05/1731 (Saint-Sulpice) — 25/11/2026
 RAD=float(os.environ.get('MOVES_RADIUS','10')); EXC={'jenny-therese-von-rosenbach':50}
 IDX={'pierre-schulz':1,'jean-denis-1894':2,'marie-therese-jordan':3,'claude-hachette':4,'georges-masson':5,'roger-rene-le-franc':6,'marie-therese-jacquey-de-baralle':7}
 def hv(a,b):
@@ -90,12 +92,14 @@ def main(path):
         for m in g['mv']:
             m=dict(m); m['ids']=[x for x in m['ids'] if x in rows]
             if not m['ids']: continue
-            r=rows[m['ids'][0]]; m.update(f=r['bp'],t=r['dp'],fi=r['_b'],ti=r['_d']); ng['mv'].append(m)
+            r=rows[m['ids'][0]]; m.update(f=r['bp'],t=r['dp'],fi=r['_b'],ti=r['_d'])
+            if m.get('y1') is None and m['ids'][0] in MOVE_DATES: m['y1'],m['y2']=MOVE_DATES[m['ids'][0]]
+            ng['mv'].append(m)
         out.append(ng); rep['conservees']+=1
     for x,r in sorted(rows.items(),key=lambda t:(int(t[1]['dy'] or 9999),t[0])):
         if x in used: continue
         bi=brs(x) or []; k=len(out)+1; r=dict(r); fi,ti=r.pop('_b'),r.pop('_d'); r['rel']=relation(x,bi,BN) if bi else ''
-        out.append({'k':k,'lv':zoom(pl[fi],pl[ti]),'bi':bi,'n':r['n'],'mv':[{'l':str(k),'y1':None,'y2':None,'b':bi,'n':r['n'],'f':r['bp'],'t':r['dp'],'fi':fi,'ti':ti,'ids':[x]}],'p':[r]})
+        out.append({'k':k,'lv':zoom(pl[fi],pl[ti]),'bi':bi,'n':r['n'],'mv':[{'l':str(k),'y1':MOVE_DATES.get(x,(None,None))[0],'y2':MOVE_DATES.get(x,(None,None))[1],'b':bi,'n':r['n'],'f':r['bp'],'t':r['dp'],'fi':fi,'ti':ti,'ids':[x]}],'p':[r]})
         rep['nouvelles'].append((x,r['n'],r['bp'],r['dp'],r['km'],bi))
     for i,g in enumerate(out,1):
         g['k']=i
