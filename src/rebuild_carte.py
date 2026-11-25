@@ -88,7 +88,7 @@ NEWM={
 }
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
  'Vanel':('Vanel','lieu non identifié (sans département)',True),
- 'Picardie':('Picardie','région, pas un lieu précis (seuls les communes et lieux-dits sont placés)',True)}
+ 'Picardie':('Picardie','région, pas un lieu précis',True)}
 oldun={u['label']:u for u in D['unplaced']}
 for lab,(l,why,eu) in UNP.items():
     if lab in oldun: assert oldun[lab]['reason']==why,(lab,oldun[lab]['reason'])
