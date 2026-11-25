@@ -267,6 +267,7 @@ NEW = {
  'Ingénieur, Industriel': {2: ['Ingénieur', 'Industriel']},
  'Instituteur à La Chiesaz': {6: ['Instituteur']},
  'Marchand à Montbéliard': {0: ['Marchand']},
+ 'Lieutenant de cavalerie, Laboureur': {4: ['Lieutenant de cavalerie'], 7: ['Laboureur']},
  'Maître épicier': {0: ['Épicier']},
  'Maître-teinturier à Nîmes': {8: ['Teinturier']},
  'Négociant en soieries': {0: ['Négociant en soieries'], 8: ['Négociant en soieries']},
