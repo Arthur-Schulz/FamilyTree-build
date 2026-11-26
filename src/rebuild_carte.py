@@ -36,6 +36,8 @@ for ev in D['events']:
 DROP={'Picardie','Dizimieu'}   # Dizimieu (Isère) retiré le 26/11/2026 : les fiches parlent de Dizimieux, hameau de Longes (69)
 _dp={k for k,p in enumerate(D['places']) if p['name'] in DROP}
 oldev={k:v for k,v in oldev.items() if v[0]['p'] not in _dp}; rawmap={k:v for k,v in rawmap.items() if v not in _dp}
+REDO={'Vanel (69)'}   # libellés à re-résoudre via NEWM même si l'ancienne page les avait déjà placés (correction de localisation)
+oldev={k:v for k,v in oldev.items() if v[1] not in REDO}; rawmap={k:v for k,v in rawmap.items() if k not in REDO}
 def newplace(name,lat,lon,src_,loc):
     places.append({'k':name,'name':name,'lat':lat,'lon':lon,'x':None,'y':None,'src':src_,'loc':loc}); byname[name]=len(places)-1; return len(places)-1
 # lieux ajoutés le 25/11/2026 (Bungener) : coordonnées GeoNames (Calvisson, Saint-Jean-du-Bruel, Saint-Sulpice NE) ou Wikipédia (les autres)
