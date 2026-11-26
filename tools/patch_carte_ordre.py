@@ -33,3 +33,10 @@ if '.tri-first' not in s:
     a='.tri{font-size:17px;line-height:1;vertical-align:-1px;margin:0 3px}'; assert s.count(a)==1
     s=s.replace(a,a+'.tri-first svg{display:inline-block;vertical-align:-1px}')
 open(p,'w',encoding='utf-8').write(s); print('picto ok')
+
+# (5) 26/11/2026 : libellés courts des boutons de navigation
+s=open(p,encoding='utf-8').read()
+for a,b in (('</span> Revenir au début</button>','</span> Début</button>'),('Événement précédent</button>','Précédent</button>'),('>Événement suivant <span class="tri"','>Suivant <span class="tri"'),
+            ('<span class="tri" aria-hidden="true">&#x2BC7;</span> Événement précédent','<span class="tri" aria-hidden="true">&#x2BC7;</span> Précédent')):
+    s=s.replace(a,b)
+open(p,'w',encoding='utf-8').write(s); print('libellés ok')
