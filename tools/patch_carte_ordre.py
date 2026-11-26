@@ -20,3 +20,8 @@ m=re.search(r'<button type="button" id="rb-first".*?</button>',s)
 if m and s.index('id="rb-first"')>s.index('id="rb-prev"'):
     btn=m.group(0); s=s.replace(btn,'',1); a='<button type="button" id="rb-prev">'; assert s.count(a)==1; s=s.replace(a,btn+a)
 open(p,'w',encoding='utf-8').write(s); print('ordre boutons ok')
+
+# (4) 26/11/2026 : ◀ et ▶ des boutons précédent / suivant forcés en emoji (U+FE0F), comme ⏮
+s=open(p,encoding='utf-8').read()
+s=s.replace('&#x2BC7;','&#x25C0;&#xFE0F;').replace('&#x2BC8;','&#x25B6;&#xFE0F;')
+open(p,'w',encoding='utf-8').write(s); print('fleches emoji ok')
