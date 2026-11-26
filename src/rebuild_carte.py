@@ -56,6 +56,7 @@ NEWP={
  'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
  # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
  'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
+ 'Vanel (Longes)':(45.481936,4.670267,'Vanel, 69420 Longes (Google Maps, lien fourni par Arthur le 26/11/2026)','69'),
 }
 # libellé brut -> (nom du lieu, note ou None)
 NEWM={
@@ -81,7 +82,7 @@ NEWM={
  # 26/11/2026 : Dizimieu(x) (69) = hameau de Longes (69420), et non Dizimieu (Isère) ; Vanel (69420)
  'Dizimieu (69)':('Longes','« Dizimieu » = Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
  'Dizimieux (69)':('Longes','Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
- 'Vanel (69)':('Longes','Vanel (69420) : commune non confirmée ; placé sur Longes (même code postal, même secteur que les autres lieux de la famille) : identification non confirmée'),
+ 'Vanel (69)':('Vanel (Longes)',None),
  'Mersuay (70)':('Mersuay',None),
  'Auxon (70)':('Auxon',None),
  'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
