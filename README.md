@@ -51,6 +51,6 @@ Quatre accès : **proches** (racine du site, mot de passe, tout l'arbre) et troi
 - Dossiers de périmètre : la liste des lieux de la Carte est réduite aux lieux utilisés (106 / 134 / 72 ; indices renumérotés dans `prefilter_carte`, contrôlé par `tools/test_fuites.py`).
 
 ## Retouches du 26/11/2026 (soir)
-- `tools/patch_jordan_oreille.py` : page C. Jordan, cartouche de droite repliable par une « oreille » sur son bord gauche (en haut) ; replié, le cartouche est masqué et l'oreille reste au bord droit.
+- `tools/patch_jordan_oreille.py` (v2) : page C. Jordan, cartouche de droite repliable par une « oreille » sur son bord gauche (recouvrement de 4 px, sans coupure visible) ; replié : cartouche masqué et bouton carré arrondi au coin haut droit.
 - `tools/patch_carte_ordre.py` : « Début » rétablit aussi le cadrage initial (`rLayout(); rFit()`).
 - Page Arbre (artifact, version 1795707407-ab17) : « Tout déplier » → zoom minimum (20 %), « Tout replier » → zoom maximum (100 %).
