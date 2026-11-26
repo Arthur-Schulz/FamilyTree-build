@@ -43,3 +43,9 @@ Quatre accès : **proches** (racine du site, mot de passe, tout l'arbre) et troi
 
 ## Carte : lignées des relocalisations (26/11/2026)
 8 lignées (couleurs `--c1`…`--c8`) : Schulz, Denis, Jordan, Hachette, Masson, Le Franc, Jacquey, Bonhomme (racine `joseph-bonhomme`). `IDX`/`BN` dans `src/rebuild_moves.py` ; `tools/patch_carte_bonhomme.py` (appelé par `build.sh`) ajoute la couleur, la légende, la ligne de la frise et le motif hachuré au gabarit. Un groupe conservé sans lignée reçoit ses lignées au recalcul.
+
+## Décisions du 26/11/2026 (suite)
+- Reclus (42) et Picardie : ne plus signaler (`SILENT` dans `src/rebuild_carte.py` ; la page n'a plus de lieux « non localisés »).
+- « Lieutenant de cavalerie, Laboureur » : classement Armée + Terre validé.
+- Marie-Thérèse Jacquey de Baralle (née 15/11/1901) : décédée (confirmé) ; aucune date connue, fiche inchangée.
+- Dossiers de périmètre : la liste des lieux de la Carte est réduite aux lieux utilisés (106 / 134 / 72 ; indices renumérotés dans `prefilter_carte`, contrôlé par `tools/test_fuites.py`).

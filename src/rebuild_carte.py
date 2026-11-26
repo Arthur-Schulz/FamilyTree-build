@@ -114,6 +114,7 @@ NEWM={
  "St-Jean-du-Bruel (Rouergue, aujourd'hui Aveyron)":('Saint-Jean-du-Bruel',None),
  'St-Sulpice (Neuchâtel, Suisse)':('Saint-Sulpice (Neuchâtel)',None),
 }
+SILENT={'Reclus (42)','Picardie'}
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
  'Picardie':('Picardie','région, pas un lieu précis',True)}
 # notes d'incertitude levées par Arthur le 26/11/2026 : libellé brut -> (note a, qualificatif q)
@@ -168,6 +169,7 @@ for x in order:
             if name in byname: pi=byname[name]
             else: la,lo,sr,loc=NEWP[name]; pi=newplace(name,la,lo,sr,loc)
         elif raw in UNP:
+            if raw in SILENT: continue   # Reclus (42) et Picardie : à ne plus signaler (décision du 26/11/2026)
             lab,why,eu=UNP[raw]; u=unplaced.setdefault(lab,{'label':lab,'reason':why,'eu':eu,'n':[],'ids':[],'w':[]})
             u['n'].append(nm(p)); u['ids'].append(x); u['w'].append(w); continue
         else: rep['NON_RESOLU'].append((x,t,raw)); continue

@@ -92,6 +92,13 @@ def prefilter_carte(t, PROF):
         n = sum(q['id'] in ids for q in m['p'])
         assert n in (0, len(m['p'])), 'relocalisation partielle (%s) dans %s' % (m.get('k'), PROF['id'])
     D = run_pt(D, PROF, pt_block(t))
+    # liste des lieux réduite à ceux qu'utilisent les événements et relocalisations du périmètre (décision du 26/11/2026) ; indices renumérotés
+    used = sorted({ev['p'] for ev in D['events']} | {m[k] for g in D['moves'] for m in g['mv'] for k in ('fi', 'ti')})
+    nw = {o: n for n, o in enumerate(used)}
+    D['places'] = [D['places'][o] for o in used]
+    for ev in D['events']: ev['p'] = nw[ev['p']]
+    for g in D['moves']:
+        for m in g['mv']: m['fi'] = nw[m['fi']]; m['ti'] = nw[m['ti']]
     t = t[:a] + dumps(D) + t[a + e:]
     # note « Exception » : retirée si son entrée n'est pas dans le périmètre
     m = re.search(r'<details class="fq" id="rl-exc" data-pid="([^"]+)">.*?</details>', t, re.S)

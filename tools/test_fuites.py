@@ -33,6 +33,11 @@ for p in profils:
     for f in sorted(os.listdir(d)):
         if not f.endswith('.enc') or f == 'acces-0.enc' or f.startswith('planche-'): continue
         t = bp.unseal(open(d + '/' + f, 'rb').read(), M).decode('utf-8'); n_f += 1
+        if f == 'carte.enc':   # liste des lieux réduite aux lieux utilisés, indices valides
+            a0 = t.index('const D={"W"') + 8; Dc, _ = json.JSONDecoder().raw_decode(t[a0:])
+            u = {e['p'] for e in Dc['events']} | {m[k] for g in Dc['moves'] for m in g['mv'] for k in ('fi', 'ti')}
+            assert u == set(range(len(Dc['places']))), 'lieux inutilisés ou indices invalides dans ' + p['id']
+            print('%s : %d lieux (tous utilisés)' % (p['id'], len(Dc['places'])))
         ids_vus = set(re.findall(r'"([a-z0-9][a-z0-9.-]*)"', t)) & hors
         if ids_vus: print('ECHEC %s/%s : %d identifiants hors périmètre, ex. %s' % (p['id'], f, len(ids_vus), sorted(ids_vus)[:4])); ok = False
         for rx in bp.INTERDITS:
