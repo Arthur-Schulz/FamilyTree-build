@@ -10,7 +10,7 @@ Modes
 <dossier de travail> = celui de build.sh : bundle.json, out/*.html (pages recalculées), pages/*.html (autres pages du zip),
 zip/ (planche-N.enc.js, profils.js). Il contient des données en clair : hors dépôt.
 
-Secrets (jamais enregistrés) : PW_PROCHES (mot de passe de la racine) ; LIEN_SCHULZ, LIEN_BONHOMME, LIEN_LEFRANC = "<jeton12>/<clé20>".
+Secrets : PW_PROCHES (jamais enregistré) ; LIEN_SCHULZ, LIEN_BONHOMME, LIEN_LEFRANC = "<jeton12>/<clé20>" (sinon repris de liens.enc, scellé par PW_PROCHES ; sinon tirés au hasard). PERSIST_LIENS=1 écrit liens.enc.
 Absents : liens tirés au hasard et affichés une seule fois ; mot de passe absent = erreur (sauf option --test : tiré au hasard).
 
 Chiffrement : PBKDF2-SHA256 600 000 itérations, AES-256-GCM, gzip ; fichier = sel (16) + iv (12) + chiffré. Clé maître M aléatoire par dossier ;
@@ -190,8 +190,17 @@ CONTACT = ('<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta nam
            '<input type="hidden" name="form-name" value="contact"><input name="bot-field"><input name="objet"><textarea name="message"></textarea>'
            '<input name="nom"><input name="email" type="email"><input name="page"><input name="profil"></form></body></html>')
 
+LIENS_FILE = os.path.join(REPO, 'liens.enc')
+
+def liens_stockes():
+    """Liens déjà attribués, scellés avec le mot de passe « proches » (fichier liens.enc du dépôt). {} si absent ou si le mot de passe manque."""
+    pw = os.environ.get('PW_PROCHES')
+    if not pw or not os.path.exists(LIENS_FILE): return {}
+    try: return json.loads(unseal(open(LIENS_FILE, 'rb').read(), pw))
+    except Exception: raise SystemExit('liens.enc : illisible avec ce mot de passe PW_PROCHES (mot de passe modifié ?). Fournir LIEN_* ou retirer liens.enc pour en générer de nouveaux.')
+
 def secret_lien(p, test):
-    v = os.environ.get(p['env'])
+    v = os.environ.get(p['env']) or liens_stockes().get(p['id'])
     if v:
         assert re.fullmatch(r'[a-z0-9]{12}/[A-Za-z0-9]{20}', v), p['env'] + ' : format attendu <jeton12>/<clé20>'
         return v.split('/')
@@ -250,6 +259,10 @@ def build_enc(W, out, test=False):
         fich['acces-0.enc'] = seal(dumps({'m': M, 'prof': prof}).encode('utf-8'), secret)
         for k, v in fich.items(): open(os.path.join(d, k), 'wb').write(v)
     print('\n'.join(resume))
+    if os.environ.get('PERSIST_LIENS') == '1' and not test:       # conserve les liens pour les constructions suivantes (scellés par le mot de passe « proches »)
+        store = {pid: '%s/%s' % (liens[pid][0].split('-', 1)[1], liens[pid][1]) for pid in liens if pid != 'proches'}
+        open(LIENS_FILE, 'wb').write(seal(json.dumps(store).encode('utf-8'), os.environ['PW_PROCHES']))
+        print('liens enregistrés (chiffrés) dans liens.enc')
     print('--- accès (à conserver hors dépôt : affichés une seule fois) ---')
     for p in profils:
         if p['acces'] == 'lien': print('%s : /%s/index.html#k=%s' % (p['id'], liens[p['id']][0], liens[p['id']][1]))

@@ -13,3 +13,4 @@ __pycache__/
 !profils.json
 # coque commune du site (aucune donnée de l arbre)
 !src/shell/*.js
+!liens.enc
