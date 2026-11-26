@@ -101,6 +101,8 @@ def main(path):
         bi=brs(x) or []; k=len(out)+1; r=dict(r); fi,ti=r.pop('_b'),r.pop('_d'); r['rel']=relation(x,bi,BN) if bi else ''
         out.append({'k':k,'lv':zoom(pl[fi],pl[ti]),'bi':bi,'n':r['n'],'mv':[{'l':str(k),'y1':MOVE_DATES.get(x,(None,None))[0],'y2':MOVE_DATES.get(x,(None,None))[1],'b':bi,'n':r['n'],'f':r['bp'],'t':r['dp'],'fi':fi,'ti':ti,'ids':[x]}],'p':[r]})
         rep['nouvelles'].append((x,r['n'],r['bp'],r['dp'],r['km'],bi))
+    # ordre chronologique de la séquence (flèches « Événement précédent / suivant ») : date de début la plus ancienne, sans date en dernier ; tri stable
+    out.sort(key=lambda g:min((m['y1'] if m['y1'] is not None else 99999) for m in g['mv']))
     for i,g in enumerate(out,1):
         g['k']=i
         for j,m in enumerate(g['mv']): m['l']=str(i)+('abcd'[j] if len(g['mv'])>1 else '')
