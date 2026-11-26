@@ -8,7 +8,7 @@ import sys,os,json,math,collections,re
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from model import P,U
 # dates de relocalisation (frise), données par Arthur pour les entrées nouvelles : id -> (année début, année fin)
-MOVE_DATES={'jean-francois-cranney-1708':(1725,1730)}   # monté à Paris peu avant son mariage du 20/05/1731 (Saint-Sulpice) — 25/11/2026
+MOVE_DATES={'jean-francois-cranney-1708':(1725,1730),'joseph-bonhomme':(1920,1925)}   # monté à Paris peu avant son mariage du 20/05/1731 (Saint-Sulpice) — 25/11/2026
 RAD=float(os.environ.get('MOVES_RADIUS','10')); EXC={'jenny-therese-von-rosenbach':50}
 IDX={'pierre-schulz':1,'jean-denis-1894':2,'marie-therese-jordan':3,'claude-hachette':4,'georges-masson':5,'roger-rene-le-franc':6,'marie-therese-jacquey-de-baralle':7}
 def hv(a,b):
