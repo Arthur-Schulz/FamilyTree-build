@@ -40,3 +40,9 @@ for a,b in (('</span> Revenir au début</button>','</span> Début</button>'),('�
             ('<span class="tri" aria-hidden="true">&#x2BC7;</span> Événement précédent','<span class="tri" aria-hidden="true">&#x2BC7;</span> Précédent')):
     s=s.replace(a,b)
 open(p,'w',encoding='utf-8').write(s); print('libellés ok')
+
+# (6) 26/11/2026 : « Début » rétablit aussi le cadrage initial (rFit), comme à l'ouverture du mode
+s=open(p,encoding='utf-8').read()
+a="rbF.addEventListener('click',()=>{ R.nav=0; R.hov=null; render(); });"
+if a in s: s=s.replace(a,"rbF.addEventListener('click',()=>{ R.nav=0; R.hov=null; render(); rLayout(); rFit(); });")
+open(p,'w',encoding='utf-8').write(s); print('debut cadrage ok')

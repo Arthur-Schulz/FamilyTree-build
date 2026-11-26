@@ -17,6 +17,7 @@ python3 -I src/rebuild_carte.py "$W/pages/carte.html" "$W/out/carte.html"
 python3 -I src/rebuild_moves.py "$W/out/carte.html"   # liste des relocalisations (rayon 10 km, variable MOVES_RADIUS)
 python3 -I src/rebuild_metiers.py "$W/bundle.json" "$W/pages/metiers.html" "$W/out/metiers.html"
 [ -n "$ARBRE" ] && python3 -I src/rebuild_arbre.py "$ARBRE" "$W/pages/arbre.html" "$W/out/arbre.html"   # page Arbre = artifact (version courante) + adaptations zip
+python3 -I tools/patch_jordan_oreille.py "$W/pages/cjordan.html"
 python3 -I tools/patch_jordan_neutre.py "$W/pages/cjordan.html" "$W/out/cjordan.html"   # page C. Jordan 1917 sans mention du propriétaire
 python3 -I src/check_moves.py   "$W/out/carte.html"
 python3 -I tools/build_profiles.py local-profils "$W"   # identifiants des périmètres (profils.js) recalculés d'après les données courantes
