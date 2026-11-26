@@ -40,3 +40,6 @@ Quatre accès : **proches** (racine du site, mot de passe, tout l'arbre) et troi
 - Chiffrement : PBKDF2-SHA256 (600 000 itérations), AES-256-GCM, gzip ; fichier = `FTB1` + sel + nonce + texte chiffré. Le mot de passe n'est stocké nulle part : sans lui, le fichier est irrécupérable.
 - `TREE_PASSWORD=... python3 -I tools/backup_crypt.py enc <sauvegarde.json> backups/arbre-AAAA-MM-JJ.enc`
 - `TREE_PASSWORD=... python3 -I tools/backup_crypt.py dec backups/arbre-AAAA-MM-JJ.enc <sortie.json>`
+
+## Carte : lignées des relocalisations (26/11/2026)
+8 lignées (couleurs `--c1`…`--c8`) : Schulz, Denis, Jordan, Hachette, Masson, Le Franc, Jacquey, Bonhomme (racine `joseph-bonhomme`). `IDX`/`BN` dans `src/rebuild_moves.py` ; `tools/patch_carte_bonhomme.py` (appelé par `build.sh`) ajoute la couleur, la légende, la ligne de la frise et le motif hachuré au gabarit. Un groupe conservé sans lignée reçoit ses lignées au recalcul.
