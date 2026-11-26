@@ -8,3 +8,8 @@ export/
 *.html
 __pycache__/
 *.json
+
+# profils.json : périmètres (racines, pages, dossiers) — aucune donnée personnelle ni secret
+!profils.json
+# coque commune du site (aucune donnée de l arbre)
+!src/shell/*.js
