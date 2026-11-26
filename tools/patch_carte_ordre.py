@@ -21,7 +21,15 @@ if m and s.index('id="rb-first"')>s.index('id="rb-prev"'):
     btn=m.group(0); s=s.replace(btn,'',1); a='<button type="button" id="rb-prev">'; assert s.count(a)==1; s=s.replace(a,btn+a)
 open(p,'w',encoding='utf-8').write(s); print('ordre boutons ok')
 
-# (4) 26/11/2026 : ◀ et ▶ des boutons précédent / suivant forcés en emoji (U+FE0F), comme ⏮
+# (4) 26/11/2026 (révisé) : emoji abandonnés. ◀ et ▶ reviennent aux symboles d'origine (U+2BC7 / U+2BC8) ; « Revenir au début » reçoit un pictogramme SVG noir et blanc
+# (barre + double triangle, couleur du texte) à la taille des symboles.
 s=open(p,encoding='utf-8').read()
-s=s.replace('&#x2BC7;','&#x25C0;&#xFE0F;').replace('&#x2BC8;','&#x25B6;&#xFE0F;')
-open(p,'w',encoding='utf-8').write(s); print('fleches emoji ok')
+s=s.replace('&#x25C0;&#xFE0F;','&#x2BC7;').replace('&#x25B6;&#xFE0F;','&#x2BC8;')
+SVG=('<span class="tri tri-first" aria-hidden="true"><svg viewBox="0 0 22 12" width="22" height="12" fill="currentColor" focusable="false">'
+     '<rect x="0" y="0" width="2.6" height="12"/><polygon points="12,0 12,12 3.6,6"/><polygon points="21.4,0 21.4,12 13,6"/></svg></span>')
+for old in ('<span class="tri" aria-hidden="true">&#x23EE;&#xFE0F;</span>','<span class="tri" aria-hidden="true">&#x23EE;&#xFE0E;</span>'):
+    s=s.replace(old,SVG)
+if '.tri-first' not in s:
+    a='.tri{font-size:17px;line-height:1;vertical-align:-1px;margin:0 3px}'; assert s.count(a)==1
+    s=s.replace(a,a+'.tri-first svg{display:inline-block;vertical-align:-1px}')
+open(p,'w',encoding='utf-8').write(s); print('picto ok')
