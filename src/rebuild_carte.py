@@ -36,7 +36,7 @@ for ev in D['events']:
 DROP={'Picardie','Dizimieu'}   # Dizimieu (Isère) retiré le 26/11/2026 : les fiches parlent de Dizimieux, hameau de Longes (69)
 _dp={k for k,p in enumerate(D['places']) if p['name'] in DROP}
 oldev={k:v for k,v in oldev.items() if v[0]['p'] not in _dp}; rawmap={k:v for k,v in rawmap.items() if v not in _dp}
-REDO={'Vanel (69)'}   # libellés à re-résoudre via NEWM même si l'ancienne page les avait déjà placés (correction de localisation)
+REDO={'Vanel (69)','Dizimieu (69)','Dizimieux (69)'}   # libellés à re-résoudre via NEWM même si l'ancienne page les avait déjà placés (correction de localisation)
 oldev={k:v for k,v in oldev.items() if v[1] not in REDO}; rawmap={k:v for k,v in rawmap.items() if k not in REDO}
 def newplace(name,lat,lon,src_,loc):
     places.append({'k':name,'name':name,'lat':lat,'lon':lon,'x':None,'y':None,'src':src_,'loc':loc}); byname[name]=len(places)-1; return len(places)-1
@@ -58,6 +58,7 @@ NEWP={
  'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
  # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
  'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
+ 'Dizimieux (Longes)':(45.521987,4.664859,'Dizimieux, hameau de Longes (coordonnées fournies par Arthur le 26/11/2026)','69'),
  'Vanel (Longes)':(45.481936,4.670267,'Vanel, 69420 Longes (Google Maps, lien fourni par Arthur le 26/11/2026)','69'),
 }
 # libellé brut -> (nom du lieu, note ou None)
@@ -82,8 +83,8 @@ NEWM={
  'Mersuay':('Mersuay',None),
  'Le Crozet (Loire)':('Le Crozet',None),
  # 26/11/2026 : Dizimieu(x) (69) = hameau de Longes (69420), et non Dizimieu (Isère) ; Vanel (69420)
- 'Dizimieu (69)':('Longes','« Dizimieu » = Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
- 'Dizimieux (69)':('Longes','Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
+ 'Dizimieu (69)':('Dizimieux (Longes)',None),
+ 'Dizimieux (69)':('Dizimieux (Longes)',None),
  'Vanel (69)':('Vanel (Longes)',None),
  'Mersuay (70)':('Mersuay',None),
  'Auxon (70)':('Auxon',None),
