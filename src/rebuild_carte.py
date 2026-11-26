@@ -58,14 +58,14 @@ NEWP={
  'Auxon':(47.6828,6.1658,'Auxon, Haute-Saône (Wikipédia)','70'),
  # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
  'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
- 'Dizimieux (Longes)':(45.521987,4.664859,'Dizimieux, hameau de Longes (coordonnées fournies par Arthur le 26/11/2026)','69'),
+ 'Dizimieux (Longes)':(45.521987,4.664859,'Dizimieux, hameau de Longes (coordonnées, 26/11/2026)','69'),
  # 26/11/2026 : coordonnées fournies par Arthur
- 'Saint-Just-en-Doizieux':(45.438101,4.579657,'Saint-Just-en-Doizieux (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
- 'Saint-Julien-en-Jarez':(45.481246,4.527187,'Saint-Julien-en-Jarez (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
- 'Izieux':(45.433349,4.477529,'Izieux, quartier de Saint-Chamond (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
- 'Saint-Martin-en-Coailleux':(45.461618,4.520960,'Saint-Martin-en-Coailleux (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
- 'Rochetaillée':(45.412264,4.443181,'Rochetaillée, quartier de Saint-Étienne (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
- 'Vanel (Longes)':(45.481936,4.670267,'Vanel, 69420 Longes (Google Maps, lien fourni par Arthur le 26/11/2026)','69'),
+ 'Saint-Just-en-Doizieux':(45.438101,4.579657,'Saint-Just-en-Doizieux (coordonnées Google Maps, 26/11/2026)','42'),
+ 'Saint-Julien-en-Jarez':(45.481246,4.527187,'Saint-Julien-en-Jarez (coordonnées Google Maps, 26/11/2026)','42'),
+ 'Izieux':(45.433349,4.477529,'Izieux, quartier de Saint-Chamond (coordonnées Google Maps, 26/11/2026)','42'),
+ 'Saint-Martin-en-Coailleux':(45.461618,4.520960,'Saint-Martin-en-Coailleux (coordonnées Google Maps, 26/11/2026)','42'),
+ 'Rochetaillée':(45.412264,4.443181,'Rochetaillée, quartier de Saint-Étienne (coordonnées Google Maps, 26/11/2026)','42'),
+ 'Vanel (Longes)':(45.481936,4.670267,'Vanel, 69420 Longes (Google Maps, 26/11/2026)','69'),
 }
 # libellé brut -> (nom du lieu, note ou None)
 NEWM={
@@ -117,18 +117,18 @@ NEWM={
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
  'Picardie':('Picardie','région, pas un lieu précis',True)}
 # notes d'incertitude levées par Arthur le 26/11/2026 : libellé brut -> (note a, qualificatif q)
-OK=' (confirmé par Arthur, 26/11/2026)'
+OK=' (confirmé, 26/11/2026)'
 FIX={
  'Jegisdorf':("orthographe de la source ; identification à Jegenstorf"+OK,None),
- 'Sankt Stephan (Berne, Suisse)':("« Saint-Stephan » dans la source ; identification à Sankt Stephan (canton de Berne) par Arthur",None),
+ 'Sankt Stephan (Berne, Suisse)':("« Saint-Stephan » dans la source ; identification retenue : Sankt Stephan (canton de Berne)",None),
  'Leiston (Suffolk, Grande-Bretagne)':("« Leston » dans la source ; identification à Leiston"+OK,None),
  'Doson (Tonkin)':("« Doson » identifié à Đồ Sơn, station balnéaire près de Haiphong"+OK+" ; placé sur Haiphong",None),
  '61800 Fresnes':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
  'Fresnes':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
  'Fresnes (61)':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
  'La Queue de Fresnes à Fresnes (61)':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
- 'Montjoie':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921, d'après Arthur)"),
- 'Montjoie - 50':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921, d'après Arthur)"),
+ 'Montjoie':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921 ; information non vérifiée)"),
+ 'Montjoie - 50':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921 ; information non vérifiée)"),
  'Ménil-Rousselin - 50':(None,"« Ménil-Rousselin » : Le Mesnil-Rouxelin (50)"+OK),
  'Courcouron (07)':("graphie « Courcouron » dans la source ; placé sur Coucouron (07)"+OK,None),
  'Le Brognon (43)':("graphie « Brognon » dans la source ; placé sur Le Brignon (43)"+OK,None),
@@ -195,6 +195,18 @@ if _drop:
         if k not in _drop: _map[k]=len(_np); _np.append(p)
     for ev in events: ev['p']=_map[ev['p']]
     places=_np
+# le prénom du propriétaire ne doit apparaître dans aucune note ni source de lieu (règle du 26/11/2026)
+_SAN=[(" (confirmé par Arthur, "," (confirmé, "),(" à la demande d'Arthur",""),(" par Arthur (Geneanet)"," (Geneanet)"),(" par Arthur",""),(" selon Arthur",""),(" d'après Arthur","")]
+def _san(t):
+    for u,v in _SAN: t=t.replace(u,v)
+    return t
+for ev in events:
+    for k in ('a','q'):
+        if ev.get(k): ev[k]=_san(ev[k])
+for pl_ in places: pl_['src']=_san(pl_['src'])
+for ev in events:
+    for k in ('a','q'): assert 'Arthur' not in (ev.get(k) or ''),(ev['i'],ev.get(k))
+for pl_ in places: assert 'Arthur' not in pl_['src'],pl_
 N=dict(D)
 N['places']=places; N['events']=events; N['unplaced']=list(unplaced.values()); N['branches']=branches
 N['persons']=len(WA[0])-1; N['nC']=len(WC[0])-1; N['gen']={'a':TODAY,'c':TODAY}
