@@ -36,7 +36,7 @@ for ev in D['events']:
 DROP={'Picardie','Dizimieu'}   # Dizimieu (Isère) retiré le 26/11/2026 : les fiches parlent de Dizimieux, hameau de Longes (69)
 _dp={k for k,p in enumerate(D['places']) if p['name'] in DROP}
 oldev={k:v for k,v in oldev.items() if v[0]['p'] not in _dp}; rawmap={k:v for k,v in rawmap.items() if v not in _dp}
-REDO={'Vanel (69)','Dizimieu (69)','Dizimieux (69)'}   # libellés à re-résoudre via NEWM même si l'ancienne page les avait déjà placés (correction de localisation)
+REDO={'Vanel (69)','Dizimieu (69)','Dizimieux (69)','Saint-Just-en-Doizieux (Loire)','Saint-Just-en-Doizieux - Doizieux (42)','Saint-Julien-en-Jarez (Loire)','Saint-Julien-en-Jarez, Saint-Chamond (Loire)','Izieux (Loire)','Izieux, Saint-Chamond (Loire)','Saint-Martin-en-Coaillieux (Loire)','Saint-Martin-en-Coailleux (Loire)','Rochetaillée (Loire)','Martinet neuf, Rochetaillée (Loire)'}   # libellés à re-résoudre via NEWM même si l'ancienne page les avait déjà placés (correction de localisation)
 oldev={k:v for k,v in oldev.items() if v[1] not in REDO}; rawmap={k:v for k,v in rawmap.items() if k not in REDO}
 def newplace(name,lat,lon,src_,loc):
     places.append({'k':name,'name':name,'lat':lat,'lon':lon,'x':None,'y':None,'src':src_,'loc':loc}); byname[name]=len(places)-1; return len(places)-1
@@ -59,6 +59,12 @@ NEWP={
  # ajoutés le 25/11/2026 (demande d'Arthur : localiser systématiquement les lieux manquants)
  'Le Crozet':(46.1706,3.8550,'Le Crozet, Loire (Wikipédia 46°10′17″N 3°51′20″E)','42'),
  'Dizimieux (Longes)':(45.521987,4.664859,'Dizimieux, hameau de Longes (coordonnées fournies par Arthur le 26/11/2026)','69'),
+ # 26/11/2026 : coordonnées fournies par Arthur
+ 'Saint-Just-en-Doizieux':(45.438101,4.579657,'Saint-Just-en-Doizieux (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
+ 'Saint-Julien-en-Jarez':(45.481246,4.527187,'Saint-Julien-en-Jarez (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
+ 'Izieux':(45.433349,4.477529,'Izieux, quartier de Saint-Chamond (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
+ 'Saint-Martin-en-Coailleux':(45.461618,4.520960,'Saint-Martin-en-Coailleux (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
+ 'Rochetaillée':(45.412264,4.443181,'Rochetaillée, quartier de Saint-Étienne (coordonnées fournies par Arthur (Google Maps, 26/11/2026))','42'),
  'Vanel (Longes)':(45.481936,4.670267,'Vanel, 69420 Longes (Google Maps, lien fourni par Arthur le 26/11/2026)','69'),
 }
 # libellé brut -> (nom du lieu, note ou None)
@@ -86,6 +92,16 @@ NEWM={
  'Dizimieu (69)':('Dizimieux (Longes)',None),
  'Dizimieux (69)':('Dizimieux (Longes)',None),
  'Vanel (69)':('Vanel (Longes)',None),
+ 'Saint-Just-en-Doizieux (Loire)':('Saint-Just-en-Doizieux',None),
+ 'Saint-Just-en-Doizieux - Doizieux (42)':('Saint-Just-en-Doizieux',None),
+ 'Saint-Julien-en-Jarez (Loire)':('Saint-Julien-en-Jarez',None),
+ 'Saint-Julien-en-Jarez, Saint-Chamond (Loire)':('Saint-Julien-en-Jarez',None),
+ 'Izieux (Loire)':('Izieux',None),
+ 'Izieux, Saint-Chamond (Loire)':('Izieux',None),
+ 'Saint-Martin-en-Coaillieux (Loire)':('Saint-Martin-en-Coailleux','graphie « Coaillieux » dans la source'),
+ 'Saint-Martin-en-Coailleux (Loire)':('Saint-Martin-en-Coailleux',None),
+ 'Rochetaillée (Loire)':('Rochetaillée',None),
+ 'Martinet neuf, Rochetaillée (Loire)':('Rochetaillée','lieu-dit de Rochetaillée, placé sur Rochetaillée'),
  'Mersuay (70)':('Mersuay',None),
  'Auxon (70)':('Auxon',None),
  'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
@@ -100,6 +116,27 @@ NEWM={
 }
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
  'Picardie':('Picardie','région, pas un lieu précis',True)}
+# notes d'incertitude levées par Arthur le 26/11/2026 : libellé brut -> (note a, qualificatif q)
+OK=' (confirmé par Arthur, 26/11/2026)'
+FIX={
+ 'Jegisdorf':("orthographe de la source ; identification à Jegenstorf"+OK,None),
+ 'Sankt Stephan (Berne, Suisse)':("« Saint-Stephan » dans la source ; identification à Sankt Stephan (canton de Berne) par Arthur",None),
+ 'Leiston (Suffolk, Grande-Bretagne)':("« Leston » dans la source ; identification à Leiston"+OK,None),
+ 'Doson (Tonkin)':("« Doson » identifié à Đồ Sơn, station balnéaire près de Haiphong"+OK+" ; placé sur Haiphong",None),
+ '61800 Fresnes':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
+ 'Fresnes':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
+ 'Fresnes (61)':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
+ 'La Queue de Fresnes à Fresnes (61)':(None,"« Fresnes » (61) : Frênes, ancienne commune de Tinchebray-Bocage"+OK),
+ 'Montjoie':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921, d'après Arthur)"),
+ 'Montjoie - 50':(None,"« Montjoie » : Montjoie-Saint-Martin (renommée en 1921, d'après Arthur)"),
+ 'Ménil-Rousselin - 50':(None,"« Ménil-Rousselin » : Le Mesnil-Rouxelin (50)"+OK),
+ 'Courcouron (07)':("graphie « Courcouron » dans la source ; placé sur Coucouron (07)"+OK,None),
+ 'Le Brognon (43)':("graphie « Brognon » dans la source ; placé sur Le Brignon (43)"+OK,None),
+ 'Laffite-sur-Lot':("graphie « Laffite » dans la source, département non indiqué : Lafitte-sur-Lot (47)"+OK,None),
+ 'Mézières (Suisse)':("canton non indiqué : Mézières (Vaud)"+OK,None),
+ 'Nancray, près de Pithiviers (Gâtinais)':("« Nancray, près de Pithiviers » = Nancray-sur-Rimarde (Loiret)"+OK,None),
+ 'La Villette':("« La Villette » : quartier de Paris (19e), ancienne commune de la Seine rattachée à Paris en 1860 ; placé sur Paris",None),
+}
 oldun={u['label']:u for u in D['unplaced']}
 for lab,(l,why,eu) in UNP.items():
     if lab in oldun: assert oldun[lab]['reason']==why,(lab,oldun[lab]['reason'])
@@ -134,6 +171,7 @@ for x in order:
             lab,why,eu=UNP[raw]; u=unplaced.setdefault(lab,{'label':lab,'reason':why,'eu':eu,'n':[],'ids':[],'w':[]})
             u['n'].append(nm(p)); u['ids'].append(x); u['w'].append(w); continue
         else: rep['NON_RESOLU'].append((x,t,raw)); continue
+        if raw in FIX: a,q=FIX[raw]
         if o and not keep: rep['lieu_modifie'].append((x,t,D['places'][o[0]['p']]['name'],raw,places[pi]['name']))
         ev={'p':pi,'i':x,'t':t,'y':yr(p[df]),'n':(o[0]['n'] if o else nm(p)),'v':life(p)}
         if (('l' in o[0]) if keep else (not (w=='a' and raw==places[pi]['name']))): ev['l']=raw
