@@ -33,7 +33,7 @@ for ev in D['events']:
     rawmap[raw]=ev['p']; oldev[(ev['i'],ev['t'])]=(ev,raw)
     if ev.get('a') or ev.get('q'): rawnote.setdefault(raw,(ev.get('a'),ev.get('q')))
 # régions et départements : jamais placés (décision d'Arthur du 25/11/2026). Un lieu de ce type présent dans la page d'entrée est retiré, ses événements repassent en « non localisés ».
-DROP={'Picardie'}
+DROP={'Picardie','Dizimieu'}   # Dizimieu (Isère) retiré le 26/11/2026 : les fiches parlent de Dizimieux, hameau de Longes (69)
 _dp={k for k,p in enumerate(D['places']) if p['name'] in DROP}
 oldev={k:v for k,v in oldev.items() if v[0]['p'] not in _dp}; rawmap={k:v for k,v in rawmap.items() if v not in _dp}
 def newplace(name,lat,lon,src_,loc):
@@ -78,6 +78,10 @@ NEWM={
  'Corsagna (Italie)':('Corsagna',None),
  'Mersuay':('Mersuay',None),
  'Le Crozet (Loire)':('Le Crozet',None),
+ # 26/11/2026 : Dizimieu(x) (69) = hameau de Longes (69420), et non Dizimieu (Isère) ; Vanel (69420)
+ 'Dizimieu (69)':('Longes','« Dizimieu » = Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
+ 'Dizimieux (69)':('Longes','Dizimieux, hameau de Longes (69420) : coordonnées du hameau non relevées, placé sur Longes'),
+ 'Vanel (69)':('Longes','Vanel (69420) : commune non confirmée ; placé sur Longes (même code postal, même secteur que les autres lieux de la famille) : identification non confirmée'),
  'Mersuay (70)':('Mersuay',None),
  'Auxon (70)':('Auxon',None),
  'Auxon les Vesoul':('Auxon','« Auxon-lès-Vesoul » identifié à Auxon (Haute-Saône)'),
@@ -91,7 +95,6 @@ NEWM={
  'St-Sulpice (Neuchâtel, Suisse)':('Saint-Sulpice (Neuchâtel)',None),
 }
 UNP={'Reclus (42)':('Reclus (42)','lieu non identifié (commune non précisée)',True),
- 'Vanel':('Vanel','lieu non identifié (sans département)',True),
  'Picardie':('Picardie','région, pas un lieu précis',True)}
 oldun={u['label']:u for u in D['unplaced']}
 for lab,(l,why,eu) in UNP.items():
