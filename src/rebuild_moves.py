@@ -10,7 +10,7 @@ from model import P,U
 # dates de relocalisation (frise), données par Arthur pour les entrées nouvelles : id -> (année début, année fin)
 MOVE_DATES={'jean-francois-cranney-1708':(1725,1730),'joseph-bonhomme':(1920,1925)}   # monté à Paris peu avant son mariage du 20/05/1731 (Saint-Sulpice) — 25/11/2026
 RAD=float(os.environ.get('MOVES_RADIUS','10')); EXC={'jenny-therese-von-rosenbach':50}
-IDX={'pierre-schulz':1,'jean-denis-1894':2,'marie-therese-jordan':3,'claude-hachette':4,'georges-masson':5,'roger-rene-le-franc':6,'marie-therese-jacquey-de-baralle':7}
+IDX={'pierre-schulz':1,'jean-denis-1894':2,'marie-therese-jordan':3,'claude-hachette':4,'georges-masson':5,'roger-rene-le-franc':6,'marie-therese-jacquey-de-baralle':7,'joseph-bonhomme':8}
 def hv(a,b):
     R=6371.0088; p1,p2=math.radians(a['lat']),math.radians(b['lat']); dl=math.radians(b['lon']-a['lon']); dp=p2-p1
     x=math.sin(dp/2)**2+math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2; return 2*R*math.asin(math.sqrt(x))
@@ -77,7 +77,7 @@ def main(path):
         rows[i]=dict(id=i,n=(p['first']+' '+p['birthName']).strip(),rel='',by=yr(p['birth']),bp=pl[pb]['name'],dy=yr(p['death']),dp=pl[pd]['name'],km=round(km),
             a=fmt(sum(any(a) for a in A),sum(a[0] for a in A),sum(a[1] for a in A)),ds=fmt(sum(any(a) for a in Dd),sum(a[0] for a in Dd),sum(a[1] for a in Dd)),dr=int(rd) if rd==int(rd) else rd,_b=pb,_d=pd)
     B3={b['id']:b for b in D['branches'] if str(b['g'])=='3'}
-    BN={1:'Pierre Schulz',2:'Jean Denis',3:'Marie-Thérèse Jordan',4:'Claude Hachette',5:'Georges Masson',6:'Roger Le Franc',7:'Marie-Thérèse Jacquey de Baralle'}
+    BN={1:'Pierre Schulz',2:'Jean Denis',3:'Marie-Thérèse Jordan',4:'Claude Hachette',5:'Georges Masson',6:'Roger Le Franc',7:'Marie-Thérèse Jacquey de Baralle',8:'Joseph Bonhomme'}
     brs=lambda x:[IDX[b] for b in IDX if b in B3 and x in B3[b]['members']]
     out=[]; rep={'conservees':0,'retirees':[],'nouvelles':[]}; used=set()
     for g in D['moves']:
@@ -95,6 +95,12 @@ def main(path):
             r=rows[m['ids'][0]]; m.update(f=r['bp'],t=r['dp'],fi=r['_b'],ti=r['_d'])
             if m.get('y1') is None and m['ids'][0] in MOVE_DATES: m['y1'],m['y2']=MOVE_DATES[m['ids'][0]]
             ng['mv'].append(m)
+        if not ng.get('bi'):   # groupe sans lignée (ex. branche Bonhomme ajoutée le 26/11/2026) : lignées recalculées ; les groupes déjà classés ne sont pas touchés
+            bi=sorted({b for x in ids for b in brs(x)})
+            if bi:
+                ng['bi']=bi
+                for m in ng['mv']: m['b']=bi
+                for p in ng['p']: p['rel']=relation(p['id'],bi,BN)
         out.append(ng); rep['conservees']+=1
     for x,r in sorted(rows.items(),key=lambda t:(int(t[1]['dy'] or 9999),t[0])):
         if x in used: continue

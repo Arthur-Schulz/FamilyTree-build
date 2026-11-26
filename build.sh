@@ -11,7 +11,7 @@ python3 -I tools/unpack.py "$IN" "$W"
 cp "$W/bundle.json" "$W/bundle_ref.json"   # snapshot de la page d'origine (correspondance libellé de lieu -> lieu de la carte)
 if [ -n "$EXPORT" ]; then python3 -I tools/merge_export.py "$EXPORT" "$W/bundle.json"; export PACK_DATA=1; fi
 export BUNDLE="$W/bundle.json" BUNDLE_REF="$W/bundle_ref.json"
-python3 -I tools/patch_carte_pond.py "$W/pages/carte.html"; python3 -I tools/patch_carte_reloc.py "$W/pages/carte.html"   # retouches d'interface du gabarit Carte (idempotentes)
+python3 -I tools/patch_carte_pond.py "$W/pages/carte.html"; python3 -I tools/patch_carte_reloc.py "$W/pages/carte.html"; python3 -I tools/patch_carte_bonhomme.py "$W/pages/carte.html"   # retouches d'interface du gabarit Carte (idempotentes)
 python3 -I src/rebuild_ages.py  "$W/pages/ages.html"  "$W/out/ages.html"
 python3 -I src/rebuild_carte.py "$W/pages/carte.html" "$W/out/carte.html"
 python3 -I src/rebuild_moves.py "$W/out/carte.html"   # liste des relocalisations (rayon 10 km, variable MOVES_RADIUS)
