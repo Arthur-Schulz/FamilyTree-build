@@ -32,6 +32,10 @@ for ev in D['events']:
     rp=REF[ev['i']]; raw=(rp['birthPlace'] if ev['t']=='b' else rp['deathPlace']).strip()
     rawmap[raw]=ev['p']; oldev[(ev['i'],ev['t'])]=(ev,raw)
     if ev.get('a') or ev.get('q'): rawnote.setdefault(raw,(ev.get('a'),ev.get('q')))
+# régions et départements : jamais placés (décision d'Arthur du 25/11/2026). Un lieu de ce type présent dans la page d'entrée est retiré, ses événements repassent en « non localisés ».
+DROP={'Picardie'}
+_dp={k for k,p in enumerate(D['places']) if p['name'] in DROP}
+oldev={k:v for k,v in oldev.items() if v[0]['p'] not in _dp}; rawmap={k:v for k,v in rawmap.items() if v not in _dp}
 def newplace(name,lat,lon,src_,loc):
     places.append({'k':name,'name':name,'lat':lat,'lon':lon,'x':None,'y':None,'src':src_,'loc':loc}); byname[name]=len(places)-1; return len(places)-1
 # lieux ajoutés le 25/11/2026 (Bungener) : coordonnées GeoNames (Calvisson, Saint-Jean-du-Bruel, Saint-Sulpice NE) ou Wikipédia (les autres)
@@ -139,6 +143,13 @@ for b in D['branches']:
     if set(b['members'])-set(mem): rep['membres_perdus'].append((b['id'],sorted(set(b['members'])-set(mem))[:5]))
     nb=dict(b); nb['v']=life(P[b['id']]); nb['members']=mem; branches.append(nb)
     if len(mem)!=len(b['members']): rep['branche_taille'].append((b['id'],len(b['members']),len(mem)))
+_drop={k for k,p in enumerate(places) if p['name'] in DROP}
+if _drop:
+    _map={}; _np=[]
+    for k,p in enumerate(places):
+        if k not in _drop: _map[k]=len(_np); _np.append(p)
+    for ev in events: ev['p']=_map[ev['p']]
+    places=_np
 N=dict(D)
 N['places']=places; N['events']=events; N['unplaced']=list(unplaced.values()); N['branches']=branches
 N['persons']=len(WA[0])-1; N['nC']=len(WC[0])-1; N['gen']={'a':TODAY,'c':TODAY}
