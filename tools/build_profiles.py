@@ -177,8 +177,8 @@ def restreindre(B, ids):
     for k, u in B['unions'].items():
         if u['a'] in s and u['b'] in s: o['unions'][k] = u
     for k, v in o['people'].items():
-        ph = v.get('photo')
-        if ph and ph in (B.get('photos') or {}): o['photos'][ph] = B['photos'][ph]
+        for ph in (v.get('photo'), (v.get('bookSummary') or {}).get('cover')):
+            if ph and ph in (B.get('photos') or {}): o['photos'][ph] = B['photos'][ph]
         if k in (B.get('wiki') or {}): o['wiki'][k] = B['wiki'][k]
         if k in (B.get('wikifam') or {}): o['wikifam'][k] = B['wikifam'][k]
     return o

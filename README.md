@@ -57,3 +57,6 @@ Quatre accès : **proches** (racine du site, mot de passe, tout l'arbre) et troi
 
 ## Correctif Métiers des périmètres (27/11/2026)
 `prefilter_metiers` utilisait la table globale `D.nm` filtrée au lieu de la table propre au profil (`D.profiles[id].nm`) : les indices des vues renvoyaient à de mauvaises lignes (noms décalés ; erreur JS et fenêtre non ouverte pour certaines familles). Corrigé (+ assertions à la construction) ; test : `tools/test_metiers.py`.
+
+## Correctif couverture du livre (27/11/2026)
+`restreindre` ne copiait que `photo` : la couverture référencée par `bookSummary.cover` manquait dans les sites à liens (image 404 dans la fenêtre « Résumé du livre »). Copie désormais aussi la couverture.
