@@ -117,7 +117,13 @@ def prefilter_metiers(t, PROF):
     X = D['profiles'][PROF['id']]
     ids = set(PROF['ids'])
     N = {k: X[k] for k in ('date', 'bands', 'series', 'emoji', 'branches', 'views', 'bviews')}
-    N['nm'] = [r for r in D['nm'] if r[0] in ids]
+    N['nm'] = X['nm']   # table propre au profil : les indices des vues (jf, uj) y renvoient ; la table globale filtrée décalerait les noms (corrigé le 27/11/2026)
+    assert all(r[0] in ids for r in N['nm']), 'nm hors périmètre'
+    def _mx(o):
+        if isinstance(o, dict): return max([_mx(v) for v in o.values()] + [-1]) if not ({'jf'} & set(o)) else max([x for L in o['jf'] for _, xs in L for x in xs] + [x for _, xs in o.get('uj', []) for x in xs] + [-1])
+        if isinstance(o, list): return max([_mx(v) for v in o] + [-1])
+        return -1
+    assert _mx(N['views']) < len(N['nm']) and _mx(N['bviews']) < len(N['nm']), 'indices Métiers hors table nm'
     return t[:a] + dumps(N) + t[a + e:], N
 
 # ------------------------------------------------------------------ libellés du propriétaire dans le code des pages des périmètres (jamais dans « proches »)

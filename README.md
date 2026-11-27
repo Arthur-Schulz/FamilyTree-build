@@ -54,3 +54,6 @@ Quatre accès : **proches** (racine du site, mot de passe, tout l'arbre) et troi
 - `tools/patch_jordan_oreille.py` (v2) : page C. Jordan, cartouche de droite repliable par une « oreille » sur son bord gauche (recouvrement de 4 px, sans coupure visible) ; replié : cartouche masqué et bouton carré arrondi au coin haut droit.
 - `tools/patch_carte_ordre.py` : « Début » rétablit aussi le cadrage initial (`rLayout(); rFit()`).
 - Page Arbre (artifact, version 1795707407-ab17) : « Tout déplier » → zoom minimum (20 %), « Tout replier » → zoom maximum (100 %).
+
+## Correctif Métiers des périmètres (27/11/2026)
+`prefilter_metiers` utilisait la table globale `D.nm` filtrée au lieu de la table propre au profil (`D.profiles[id].nm`) : les indices des vues renvoyaient à de mauvaises lignes (noms décalés ; erreur JS et fenêtre non ouverte pour certaines familles). Corrigé (+ assertions à la construction) ; test : `tools/test_metiers.py`.
